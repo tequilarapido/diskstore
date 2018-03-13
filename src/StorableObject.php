@@ -104,6 +104,18 @@ abstract class StorableObject
     }
 
     /**
+     * Return true if object is stored for a given key
+     *
+     * @param $key
+     * @return bool
+     */
+    public static function exists($key)
+    {
+        return !is_null(static::find($key));
+    }
+
+
+    /**
      * Store the object to disk.
      */
     public function store()
