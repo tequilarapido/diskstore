@@ -1,0 +1,4 @@
+
+# tequilrapido/diskstore
+
+wip ...
