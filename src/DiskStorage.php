@@ -53,7 +53,7 @@ class DiskStorage
         $this->prepareStorage();
 
         $this->files->put(
-            $this->getFileFor($object->keyValue()),
+            $this->getFileFor($object->key()),
             json_encode($object->toArray())
         );
     }
@@ -61,25 +61,34 @@ class DiskStorage
     /**
      * Reads object from storage
      *
-     * @param $keyValue
+     * @param $key
      * @return null
      */
-    public function read($keyValue)
+    public function read($key)
     {
-        if (!$file = $this->hasSaved($keyValue)) {
+        if (!$file = $this->hasSaved($key)) {
             return null;
         }
 
-        return json_decode($this->files->get($this->getFileFor($keyValue)));
+        return json_decode($this->files->get($this->getFileFor($key)));
     }
 
-    public function hasSaved($keyValue)
+    /**
+     * Do we have a stored file for a given key.
+     *
+     * @param $key
+     * @return bool
+     */
+    public function hasSaved($key)
     {
         return $this->files->exists(
-            $this->getFileFor($keyValue)
+            $this->getFileFor($key)
         );
     }
 
+    /**
+     * Prepare disk.
+     */
     private function prepareStorage()
     {
         if (!$this->files->exists($path = $this->disk()->path(''))) {
@@ -87,19 +96,28 @@ class DiskStorage
         }
     }
 
+    /**
+     * Return laravel disk instance for this object.
+     *
+     * @return Filesystem
+     */
     private function disk()
     {
         return $this->storage->disk('locations');
     }
 
-    private function getFileFor($keyValue)
+    /**
+     * Return file path for a given key.
+     *
+     * @param $key
+     * @return mixed
+     */
+    private function getFileFor($key)
     {
-        if (!$keyValue) {
+        if (!$key) {
             throw new \LogicException('A key value is required to find the file used for storing this object on disk.');
         }
 
-        return $this->disk()->path("{$keyValue}.json");
+        return $this->disk()->path("{$key}.json");
     }
-
-
 }

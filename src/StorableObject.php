@@ -9,7 +9,7 @@ abstract class StorableObject
      *
      * This will be the name of the file on disk ( {key}.json )
      */
-    abstract static public function key();
+    abstract static public function keyName();
 
     /**
      * Defines the laravel disk that will be used for storage.
@@ -37,20 +37,20 @@ abstract class StorableObject
      *
      * @return mixed
      */
-    public function keyValue()
+    public function key()
     {
-        return $this->{static::key()};
+        return $this->{static::keyName()};
     }
 
     /**
      * Find the object on the storage
      *
-     * @param $keyValue
+     * @param $key
      * @return null|StorableObject
      */
-    public static function find($keyValue)
+    public static function find($key)
     {
-        $raw = static::diskStorage()->read($keyValue);
+        $raw = static::diskStorage()->read($key);
 
         return $raw ? static::fromArray($raw) : null;
     }
@@ -59,18 +59,18 @@ abstract class StorableObject
      * Find the object on the storage.
      * Return an empty instance if not found.
      *
-     * @param $keyValue
+     * @param $key
      *
      * @return $this
      */
-    public static function findOrNew($keyValue)
+    public static function findOrNew($key)
     {
-        if ($instance = static::find($keyValue)) {
+        if ($instance = static::find($key)) {
             return $instance;
         }
 
         $instance = new static;
-        $instance->{static::key()} = $keyValue;
+        $instance->{static::keyName()} = $key;
         return $instance;
     }
 
@@ -89,7 +89,7 @@ abstract class StorableObject
      */
     public function read()
     {
-        $raw = static::diskStorage()->read($this->keyValue());
+        $raw = static::diskStorage()->read($this->key());
 
         return $raw ? static::fromArray($raw) : null;
     }
