@@ -129,13 +129,16 @@ abstract class StorableObject
         return !is_null(static::find($key));
     }
 
-
     /**
      * Store the object to disk.
+     * 
+     * return $this
      */
     public function store()
     {
         static::diskStorage()->store($this);
+        
+        return $this;
     }
 
     /**
