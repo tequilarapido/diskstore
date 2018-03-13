@@ -27,10 +27,10 @@ class DiskStorage
      * @param Filesystem $files
      * @param FilesystemManager $storage
      */
-    public function __construct(Filesystem $files, FilesystemManager $storage)
+    public function __construct()
     {
-        $this->files = $files;
-        $this->storage = $storage;
+        $this->files = app()->make('files');
+        $this->storage = app()->make('filesystem');
     }
 
     /**
@@ -53,7 +53,7 @@ class DiskStorage
         $this->prepareStorage();
 
         $this->files->put(
-            $this->getFileFor($object->key()),
+            $this->getFileFor($object->keyValue()),
             json_encode($object->toArray())
         );
     }
@@ -61,22 +61,22 @@ class DiskStorage
     /**
      * Reads object from storage
      *
-     * @param $key
+     * @param $keyValue
      * @return null
      */
-    public function read($key)
+    public function read($keyValue)
     {
-        if (!$file = $this->hasSaved($key)) {
+        if (!$file = $this->hasSaved($keyValue)) {
             return null;
         }
 
-        return json_decode($this->files->get($this->getFileFor($key)));
+        return json_decode($this->files->get($this->getFileFor($keyValue)));
     }
 
-    public function hasSaved($key)
+    public function hasSaved($keyValue)
     {
         return $this->files->exists(
-            $this->getFileFor($key)
+            $this->getFileFor($keyValue)
         );
     }
 
@@ -92,13 +92,13 @@ class DiskStorage
         return $this->storage->disk('locations');
     }
 
-    private function getFileFor($twitter_id)
+    private function getFileFor($keyValue)
     {
-        if (!$twitter_id) {
-            throw new \LogicException('Twitter id is required.');
+        if (!$keyValue) {
+            throw new \LogicException('A key value is required to find the file used for storing this object on disk.');
         }
 
-        return $this->disk()->path("{$twitter_id}.json");
+        return $this->disk()->path("{$keyValue}.json");
     }
 
 

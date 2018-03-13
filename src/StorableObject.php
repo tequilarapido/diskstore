@@ -33,6 +33,16 @@ abstract class StorableObject
     abstract public function toArray();
 
     /**
+     * Returns key value.
+     *
+     * @return mixed
+     */
+    public function keyValue()
+    {
+        return $this->{static::key()};
+    }
+
+    /**
      * Find the object on the storage
      *
      * @param $keyValue
@@ -93,15 +103,5 @@ abstract class StorableObject
     protected static function diskStorage()
     {
         return resolve(DiskStorage::class)->setDiskName(static::diskName());
-    }
-
-    /**
-     * Returns key value.
-     *
-     * @return mixed
-     */
-    protected function keyValue()
-    {
-        return $this->{static::key()};
     }
 }
