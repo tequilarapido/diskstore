@@ -103,7 +103,7 @@ class DiskStorage
      */
     private function disk()
     {
-        return $this->storage->disk('locations');
+        return $this->storage->disk($this->diskName);
     }
 
     /**

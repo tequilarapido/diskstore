@@ -20,10 +20,25 @@ abstract class StorableObject
     abstract static public function diskName();
 
     /**
+     * Create a new instance with given key.
+     *
+     * @param $key
+     * @return static
+     */
+    public static function for($key)
+    {
+        $instance = new static();
+
+        $instance->{static::keyName()} = $key;
+
+        return $instance;
+    }
+
+    /**
      * Creates object from array.
      *
      * @param array $array
-     * @return StorableObject
+     * @return static
      */
     public static function fromArray(array $array)
     {
@@ -75,7 +90,11 @@ abstract class StorableObject
      * Find the object on the storage
      *
      * @param $key
+<<<<<<< Updated upstream
      * @return null|StorableObject
+=======
+     * @return static
+>>>>>>> Stashed changes
      */
     public static function find($key)
     {
@@ -89,8 +108,12 @@ abstract class StorableObject
      * Return an empty instance if not found.
      *
      * @param $key
+<<<<<<< Updated upstream
      *
      * @return $this
+=======
+     * @return static
+>>>>>>> Stashed changes
      */
     public static function findOrNew($key)
     {
@@ -114,13 +137,20 @@ abstract class StorableObject
         return !is_null(static::find($key));
     }
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     /**
      * Store the object to disk.
+     *
+     * @return $this
      */
     public function store()
     {
         static::diskStorage()->store($this);
+
+        return $this;
     }
 
     /**
