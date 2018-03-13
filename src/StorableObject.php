@@ -2,6 +2,9 @@
 
 namespace Tequilarapido\DiskStore;
 
+use ReflectionClass;
+use ReflectionProperty;
+
 abstract class StorableObject
 {
     /**
@@ -22,7 +25,20 @@ abstract class StorableObject
      * @param array $array
      * @return StorableObject
      */
-    abstract public static function fromArray(array $array);
+    public static function fromArray(array $array)
+    {
+        $instance = new static;
+
+        foreach ((new ReflectionClass($instance))->getProperties() as $property) {
+            if ($property->isStatic() || !$property->isPublic()) {
+                continue;
+            }
+
+            $property->setValue($instance, array_get($array, $property->getName()));
+        }
+
+        return $instance;
+    }
 
     /**
      * Return array from the object.
@@ -30,7 +46,20 @@ abstract class StorableObject
      *
      * @return array
      */
-    abstract public function toArray();
+    public function toArray()
+    {
+        $array = [];
+
+        foreach ((new ReflectionClass($this))->getProperties() as $property) {
+            if ($property->isStatic() || !$property->isPublic()) {
+                continue;
+            }
+
+            $array[$property->getName()] = $this->{$property->getName()};
+        }
+
+        return $array;
+    }
 
     /**
      * Returns key value.
