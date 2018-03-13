@@ -70,7 +70,7 @@ class DiskStorage
             return null;
         }
 
-        return json_decode($this->files->get($this->getFileFor($key)));
+        return (array) json_decode($this->files->get($this->getFileFor($key)));
     }
 
     /**
