@@ -112,7 +112,7 @@ class DiskStorage
      * @param $key
      * @return mixed
      */
-    private function getFileFor($key)
+    public function getFileFor($key)
     {
         if (!$key) {
             throw new \LogicException('A key value is required to find the file used for storing this object on disk.');

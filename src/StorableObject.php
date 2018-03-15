@@ -131,13 +131,13 @@ abstract class StorableObject
 
     /**
      * Store the object to disk.
-     * 
+     *
      * return $this
      */
     public function store()
     {
         static::diskStorage()->store($this);
-        
+
         return $this;
     }
 
@@ -151,6 +151,16 @@ abstract class StorableObject
         $raw = static::diskStorage()->read($this->key());
 
         return $raw ? static::fromArray($raw) : null;
+    }
+
+    /**
+     * Return file path.
+     *
+     * @return mixed
+     */
+    public function path()
+    {
+        return $this->diskStorage()->getFileFor($this->key());
     }
 
     /**
