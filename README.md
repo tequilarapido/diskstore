@@ -3,7 +3,9 @@
 
 
 
-Storing entities to disks. This comes handy if we want to store some data, and the database is not the best solution for that. (data size etc ...)
+This packages help with storing data to disk.  This comes handy if we persisting data in a database is not the best solution. (ie, Data size etc ...)
+
+Storing entities to disks.
 
 
 ## Install 
