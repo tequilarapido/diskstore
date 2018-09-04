@@ -99,7 +99,6 @@ FollowerLocation::for($twitter_id)->setLocation($location)->store();
 
 
 
-
 - Find an entity by its unique id 
 
 ```php
@@ -123,7 +122,7 @@ class FollowerLocation extends StorableObject
 
     public function toArray() {
        return [
-            'twitter_id' => 'This need to be here as its uid of the entity',
+            'twitter_id' => '@requried! (uid)',
             // ... 
        ];
     }
