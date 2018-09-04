@@ -8,8 +8,9 @@ Storing entities to disks. This comes handy if we want to store some data, and t
 
 ## Install 
 
+```
 composer require "tequilarapido/diskstore:0.0.2"
-
+```
 
 
 ## Usage
