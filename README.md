@@ -103,7 +103,7 @@ FollowerLocation::for($twitter_id)->setLocation($location)->store();
 - Find an entity by its unique id 
 
 ```php
-    Timeline::find($follower->twitter_id);
+    FollowerLocation::find($follower->twitter_id);
 ```
 
 
