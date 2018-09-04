@@ -3,7 +3,7 @@
 
 
 
-This packages help with storing data to disk.  This comes handy if we persisting data in a database is not the best solution. (ie, Data size etc ...)
+This packages help with storing data to disk.  This comes handy if persisting data in a database is not the best solution. (ie, Data size etc ...)
 
 Storing entities to disks.
 
