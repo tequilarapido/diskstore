@@ -1,6 +1,6 @@
 {
   "name": "tequilarapido-diskstore",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "release-patch-dryrun": "standard-version --release-as patch --no-verify --dry-run",
