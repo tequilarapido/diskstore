@@ -11,7 +11,7 @@ Storing entities to disks.
 ## Install 
 
 ```
-composer require "tequilarapido/diskstore:0.0.2"
+composer require "tequilarapido/diskstore:^1.0.0"
 ```
 
 
